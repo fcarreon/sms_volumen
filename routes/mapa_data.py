@@ -27,6 +27,16 @@ async def get_mapa_data(request: Request):
     return views.TemplateResponse("index.html", {"request":request, "data_wholesale": data_wholesale,"data_retail": data_retail})
 
 
+@mapa_data.get('/process_data')
+async def process_mapa_data():
+    data_wholesale_query =  datasEntity(conn.local.mapa_data.find({"type":"Wholesale"}))
+    for key, val in data_wholesale_query.item():
+        print(val)
+    return "Hola"
+
+
+
+
 
 
 
