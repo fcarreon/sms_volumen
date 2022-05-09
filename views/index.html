@@ -1,20 +1,140 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="/static/js/jquery.heatmapper.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <title>Reporte Volumen SMS</title>
 </head>
+
 <body>
     <h1>Reporte Volumen SMS</h1>
 </body>
-<div>
-    <h4>Wholesale</h4>
-    {{ data_wholesale }}
+
+
+
+<div class="container">
+    <div>
+        <h4>Wholesale</h4>
+        {{ table_wholesale | safe }}
+    </div>
+
+    <div>
+        <h4>Wholesale</h4>
+        {{ table_wholesale2 | safe }}
+    </div>
+    <div>
+        <h4>Retail </h4>
+
+    </div>
+
+    <script>
+
+        var increase_icon = '<i class="bi bi-arrow-up-circle-fill m-1" style="color: #339900;float:right;"></i>'
+        var decrease_icon = '<i class="bi bi-arrow-down-circle-fill m-1" style="color: #cc3300;float:right;"></i>'
+
+        var table = document.getElementById("wholesale1");
+
+        for (var i = 1, row; row = table.rows[i]; i++) {
+            //iterate through rows
+            //rows would be accessed using the "row" variable assigned in the for loop
+            var last_cell = parseInt(row.cells[7].innerText)
+
+
+            for (var j = 1, col; col = row.cells[j],j < 8; j++) {
+
+                cell_value = parseInt(col.innerText)
+
+                if (last_cell == cell_value) {
+                    $(col).css({
+                        'background-color': 'white',
+                        'color': 'black'
+                    });
+                    // Si es menor que last cell
+                } else if (cell_value > last_cell) {
+                    $(col).append(increase_icon)
+                } else if (cell_value < last_cell) {
+                    $(col).append(decrease_icon)
+                }
+                else if (Math.abs(last_cell - cell_value) < last_cell * .20) {
+                    $(col).css({
+                        'background-color': '#ff9966',
+                        'color': 'white'
+                    });
+                }
+
+
+                // console.log(cell_stylye)
+                //iterate through columns
+                //columns would be accessed using the "col" variable assigned in the for loop
+            }
+        }
+
+
+
+        var table2 = document.getElementById("wholesale2");
+
+        for (var i = 1, row; row = table2.rows[i]; i++) {
+            //iterate through rows
+            //rows would be accessed using the "row" variable assigned in the for loop
+            var last_cell = parseInt(row.cells[7].innerText)
+
+            console.log('last cel value', last_cell)
+
+            for (var j = 1, col; col = row.cells[j],j < 8; j++) {
+
+                cell_value = parseInt(col.innerText)
+                
+                if (last_cell == cell_value) {
+                    $(col).css({
+                        'background-color': 'white',
+                        'color': 'black'
+                    });
+                    // Si es menor que last cell
+                } else if (cell_value > last_cell) {
+                    // $(col).css({
+                    //     'background-color': '#99cc33',
+                    //     'color': 'white'
+                    // });
+                    $(col).append(increase_icon)
+                } else if (cell_value < last_cell) {
+                    // $(col).css({
+                    //     'background-color': '#ffcc00',
+                    //     'color': 'white'
+                    // });
+                    $(col).append(decrease_icon)
+                }
+                else if (Math.abs(last_cell - cell_value) < last_cell * .20) {
+                    $(col).css({
+                        'background-color': '#ff9966',
+                        'color': 'white'
+                    });
+                }
+                }
+        }
+
+    </script>
+
+
 </div>
-<div>
-    <h4>Retail</h4>
-    {{ data_retail }}
-</div>
+
+<style>
+    table th {
+        text-align: center!important;
+    }
+    
+
+
+</style>
+
 
 </html>

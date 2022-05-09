@@ -2,7 +2,7 @@ from fastapi import APIRouter
 
 from models.user import User
 from config.db import conn
-from schemas.user import userEntity, usersEntity
+from schemas.user import usersEntity
 
 user = APIRouter()
 

@@ -2,7 +2,7 @@ def mapa_dataEntity(item) -> dict:
     return {
         "id":str(item["_id"]),
         "date":item["date"],
-        "type":item["type"],
+        "type_data":item["type_data"],
         "data":item["data"]
 
     }
