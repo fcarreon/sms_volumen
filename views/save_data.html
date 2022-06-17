@@ -44,57 +44,76 @@
             </form>
         </div>
 
-        <div class="row p-4">
 
-            <div class="col border-end">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Data Type</th>
-                            <th>Delete?</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in data_wholesale %}
-                        <tr>
-                            <td>{{item.date}}</td>
-                            <td>{{item.type_data}}</td>
+            <form action="#" method="post">
+                <div class="form-group">
 
-                            <td><input type="checkbox" name="" id=""></td>
+                    <div class="row p-4">
 
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+                        <div class="col border-end">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Data Type</th>
+                                        <th>Select</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in data_wholesale %}
+                                    <tr>
+                                        <td>{{item.date}}</td>
+                                        <td>{{item.type_data}}</td>
+            
+                                        <td><input type="checkbox" class="form-check-input" name="{{item.date}}"></td>
+            
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+            
+                        <div class="col">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Data Type</th>
+                                        <th>Select</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in data_retail %}
+                                    <tr>
+                                        <td>{{item.date}}</td>
+                                        <td>{{item.type_data}}</td>
+            
+                                        <td><input type="checkbox" class="form-check-input" name="{{item.date}}"></td>
+            
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
 
-            <div class="col">
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-primary">Generate report</button>
+                        </div>
+        
 
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Data Type</th>
-                            <th>Delete?</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in data_retail %}
-                        <tr>
-                            <td>{{item.date}}</td>
-                            <td>{{item.type_data}}</td>
+                    </div>
 
-                            <td><input type="checkbox" name="" id=""></td>
 
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                    
 
-            </div>
 
-        </div>
+            </form>
+
+
+      
+
+
+    </div>
 
     </div>
 </body>

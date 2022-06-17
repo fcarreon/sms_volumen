@@ -1,6 +1,7 @@
 from cgitb import reset
 from contextlib import nullcontext
 from unittest import result
+from wsgiref.headers import tspecials
 from fastapi import APIRouter, Request, File, UploadFile, Form, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
@@ -67,14 +68,22 @@ async def get_mapa_data(request: Request):
 @mapa_data.get('/process_data')
 async def gen_report(request: Request):
     data_filtered = [];
+    data_filtered_retail = [];
+
     data_wholesale = datasEntity(conn.local.mapa_data.find({"type_data":"Wholesale"}))
     for item in data_wholesale:
         obj_data = item['data']
         data_filtered.extend(obj_data)
 
+    data_retail = datasEntity(conn.local.mapa_data.find({"type_data":"Retail"}))
+    for item in data_retail:
+        obj_data_retail = item['data']
+        data_filtered_retail.extend(obj_data_retail)
+
     # Wholesale
 
     df = pd.DataFrame(data_filtered)
+    #pd.options.display.float_format = '{:,}'.format
     table2 = pd.pivot_table(df, index='CustomerName', values='SMSsNumber', columns='Day', aggfunc='sum', margins=True).reset_index().rename_axis(None, axis=1)
     table2 = table2.fillna(0)
     table_special = table2
@@ -82,20 +91,34 @@ async def gen_report(request: Request):
     table2 = table2.drop(['All'])
     table2.index.names = [None]
     
-    #pd.options.display.float_format = '{:,}'.format
-    columntosort = table2.columns[6]
+    #Sort column by all column 
+    columntosort = table2.columns[7]
     table2 = table2.sort_values(by=columntosort, ascending=False)
     html_table = table2.head(10).to_html(classes="table table-bordered text-center", border="0" , table_id="wholesale1")  
     
     # special carriers
-
     special_carriers = ['ALC', 'ALK', 'BLG', 'CHM', 'DET', 'IDT', 'LNK', 'ORS', 'QXT', 'TTA', 'TTA2']
     table_special = table_special[table_special['CustomerName'].isin(special_carriers)]
     table_special = table_special.set_index(['CustomerName'])
     table_special.index.names = [None]
     table_special =  table_special.sort_values(by=columntosort, ascending=False)
+    html_table2 = table_special.to_html(classes="table table-bordered text-center", border="0", table_id="wholesale2")
 
-    html_table2 = table_special.to_html(classes="table table-striped table-hover", border="0", table_id="wholesale2")
+    # Retail
 
-    return views.TemplateResponse("index.html", {"request":request, "table_wholesale": html_table, "table_wholesale2": html_table2})
+    df_retail = pd.DataFrame(data_filtered_retail)
+    table_retail = pd.pivot_table(df_retail, index='CustomerName', values='SMSsNumber', columns='Day', aggfunc='sum', margins=True).reset_index().rename_axis(None, axis=1)
+    table_retail = table_retail.fillna(0)
+    table_retail = table_retail.set_index(['CustomerName'])
+    table_retail = table_retail.drop(['All'])
+    table_retail.index.names = [None]
+
+    # Sort retail table
+    retail_columnstosort = table_retail.columns[7]
+    table_retail = table_retail.sort_values(by=retail_columnstosort, ascending=False)
+    # Conver table to html
+    html_retail_table = table_retail.head(10).to_html(classes="table table-bordered text-center", border="0" , table_id="retail")
+    
+
+    return views.TemplateResponse("index.html", {"request":request, "table_wholesale": html_table, "table_wholesale2": html_table2, "table_retail": html_retail_table})
 

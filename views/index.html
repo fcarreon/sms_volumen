@@ -17,115 +17,155 @@
 </head>
 
 <body>
-    <h1>Reporte Volumen SMS</h1>
+
+
+    <div class="container">
+
+        <h2>Reporte Volumen SMS</h2>
+
+        <div>
+            <h4>Wholesale</h4>
+            {{ table_wholesale | safe }}
+        </div>
+    
+        <div>
+            <h4>Wholesale</h4>
+            {{ table_wholesale2 | safe }}
+        </div>
+        <div>
+            <h4>Retail</h4>
+            {{ table_retail | safe }}
+        </div>
+    
+        <script>
+    
+            var increase_icon = '<i class="bi bi-arrow-up-circle-fill m-1" style="color: #339900;float:right;"></i>'
+            var decrease_icon = '<i class="bi bi-arrow-down-circle-fill m-1" style="color: #cc3300;float:right;"></i>'
+    
+            var table = document.getElementById("wholesale1");
+    
+            for (var i = 1, row; row = table.rows[i]; i++) {
+                //iterate through rows
+                //rows would be accessed using the "row" variable assigned in the for loop
+                var last_cell = parseInt(row.cells[7].innerText)
+    
+    
+                for (var j = 1, col; col = row.cells[j],j < 8; j++) {
+    
+                    cell_value = parseInt(col.innerText)
+    
+                    if (last_cell == cell_value) {
+                        $(col).css({
+                            'background-color': 'white',
+                            'color': 'black'
+                        });
+                        // Si es menor que last cell
+                    } else if (cell_value > last_cell) {
+                        $(col).append(increase_icon)
+                    } else if (cell_value < last_cell) {
+                        $(col).append(decrease_icon)
+                    }
+                    else if (Math.abs(last_cell - cell_value) < last_cell * .20) {
+                        $(col).css({
+                            'background-color': '#ff9966',
+                            'color': 'white'
+                        });
+                    }
+    
+    
+                    // console.log(cell_stylye)
+                    //iterate through columns
+                    //columns would be accessed using the "col" variable assigned in the for loop
+                }
+            }
+    
+            var table2 = document.getElementById("wholesale2");
+    
+            for (var i = 1, row; row = table2.rows[i]; i++) {
+                //iterate through rows
+                //rows would be accessed using the "row" variable assigned in the for loop
+                var last_cell = parseInt(row.cells[7].innerText)
+    
+    
+                for (var j = 1, col; col = row.cells[j],j < 8; j++) {
+    
+                    cell_value = parseInt(col.innerText)
+    
+                    if (last_cell == cell_value) {
+                        $(col).css({
+                            'background-color': 'white',
+                            'color': 'black'
+                        });
+                        // Si es menor que last cell
+                    } else if (cell_value > last_cell) {
+                        $(col).append(increase_icon)
+                    } else if (cell_value < last_cell) {
+                        $(col).append(decrease_icon)
+                    }
+                    else if (Math.abs(last_cell - cell_value) < last_cell * .20) {
+                        $(col).css({
+                            'background-color': '#ff9966',
+                            'color': 'white'
+                        });
+                    }
+    
+    
+                    // console.log(cell_stylye)
+                    //iterate through columns
+                    //columns would be accessed using the "col" variable assigned in the for loop
+                }
+            }
+  
+    
+            var table_retail = document.getElementById("retail");
+    
+            for (var i = 1, row; row = table_retail.rows[i]; i++) {
+                //iterate through rows
+                //rows would be accessed using the "row" variable assigned in the for loop
+                var last_cell = parseInt(row.cells[7].innerText)
+    
+                for (var j = 1, col; col = row.cells[j],j < 8; j++) {
+    
+                    cell_value = parseInt(col.innerText)
+    
+                    if (last_cell == cell_value) {
+                        console.log(parseInt(last_cell))
+                        $(col).css({
+                            'background-color': 'white',
+                            'color': 'black'
+                        });
+                        // Si es menor que last cell
+                    } else if (cell_value > last_cell) {
+                        $(col).append(increase_icon)
+                    } else if (cell_value < last_cell) {
+                        $(col).append(decrease_icon)
+                    }
+                    else if (Math.abs(last_cell - cell_value) < last_cell * .20) {
+                        $(col).css({
+                            'background-color': '#ff9966',
+                            'color': 'white'
+                        });
+                    }
+    
+    
+                    // console.log(cell_stylye)
+                    //iterate through columns
+                    //columns would be accessed using the "col" variable assigned in the for loop
+                }
+            }
+    
+    
+    
+        </script>
+    
+    
+    </div>
+
 </body>
 
 
 
-<div class="container">
-    <div>
-        <h4>Wholesale</h4>
-        {{ table_wholesale | safe }}
-    </div>
 
-    <div>
-        <h4>Wholesale</h4>
-        {{ table_wholesale2 | safe }}
-    </div>
-    <div>
-        <h4>Retail </h4>
-
-    </div>
-
-    <script>
-
-        var increase_icon = '<i class="bi bi-arrow-up-circle-fill m-1" style="color: #339900;float:right;"></i>'
-        var decrease_icon = '<i class="bi bi-arrow-down-circle-fill m-1" style="color: #cc3300;float:right;"></i>'
-
-        var table = document.getElementById("wholesale1");
-
-        for (var i = 1, row; row = table.rows[i]; i++) {
-            //iterate through rows
-            //rows would be accessed using the "row" variable assigned in the for loop
-            var last_cell = parseInt(row.cells[7].innerText)
-
-
-            for (var j = 1, col; col = row.cells[j],j < 8; j++) {
-
-                cell_value = parseInt(col.innerText)
-
-                if (last_cell == cell_value) {
-                    $(col).css({
-                        'background-color': 'white',
-                        'color': 'black'
-                    });
-                    // Si es menor que last cell
-                } else if (cell_value > last_cell) {
-                    $(col).append(increase_icon)
-                } else if (cell_value < last_cell) {
-                    $(col).append(decrease_icon)
-                }
-                else if (Math.abs(last_cell - cell_value) < last_cell * .20) {
-                    $(col).css({
-                        'background-color': '#ff9966',
-                        'color': 'white'
-                    });
-                }
-
-
-                // console.log(cell_stylye)
-                //iterate through columns
-                //columns would be accessed using the "col" variable assigned in the for loop
-            }
-        }
-
-
-
-        var table2 = document.getElementById("wholesale2");
-
-        for (var i = 1, row; row = table2.rows[i]; i++) {
-            //iterate through rows
-            //rows would be accessed using the "row" variable assigned in the for loop
-            var last_cell = parseInt(row.cells[7].innerText)
-
-            console.log('last cel value', last_cell)
-
-            for (var j = 1, col; col = row.cells[j],j < 8; j++) {
-
-                cell_value = parseInt(col.innerText)
-                
-                if (last_cell == cell_value) {
-                    $(col).css({
-                        'background-color': 'white',
-                        'color': 'black'
-                    });
-                    // Si es menor que last cell
-                } else if (cell_value > last_cell) {
-                    // $(col).css({
-                    //     'background-color': '#99cc33',
-                    //     'color': 'white'
-                    // });
-                    $(col).append(increase_icon)
-                } else if (cell_value < last_cell) {
-                    // $(col).css({
-                    //     'background-color': '#ffcc00',
-                    //     'color': 'white'
-                    // });
-                    $(col).append(decrease_icon)
-                }
-                else if (Math.abs(last_cell - cell_value) < last_cell * .20) {
-                    $(col).css({
-                        'background-color': '#ff9966',
-                        'color': 'white'
-                    });
-                }
-                }
-        }
-
-    </script>
-
-
-</div>
 
 <style>
     table th {
@@ -133,7 +173,10 @@
     }
     
 
-
+    table thead {
+        background-color: rgb(239, 239, 239)!important;
+        border-color: rgb(239, 239, 239);
+    }
 </style>
 
 
